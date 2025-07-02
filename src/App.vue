@@ -1,22 +1,5 @@
-<script setup>
-import {ref, computed} from 'vue';
-
-const product = ref({
-    productName: 'Rijst',
-    productPrice: 1.50,
-    productQuantity: 3
-});
-
-const products = ref([product, product, product]);
-
-const subTotal = computed(() => {
-    return product.value.productPrice * product.value.productQuantity
-})      
-
-</script>
-
 <template>
-    <table @click="wijzigAantalProducten">
+    <table>
     <thead>
     <tr>
         <th>Product</th>
@@ -26,21 +9,58 @@ const subTotal = computed(() => {
     </tr>
     </thead>
     <tbody>
-    <tr v-for="product in products">
-        <td> {{ product.productName }}</td>
+    <tr v-for="product, index in products" :key="index">
+        <td> {{ product.name }}</td>
         <td class="amount">{{ product.productPrice }}</td>
-        <td class="amount"><input type="text" v-model="product.productQuantity"></td>
-        <td class="amount">{{ subTotal }}</td>
+        <td class="amount"><input type="text" v-model="product.productQuantity" @input="updatePrice(index)"></td>
+        <td class="amount">{{ product.productTotalCost }}</td>
     </tr>
     </tbody>
     <tfoot>
         <tr>
     <td colspan="3"><strong>Totaal</strong></td>
-   <td><strong></strong></td>
+   <td><strong>{{ totalCost }}</strong></td>
     </tr>
     </tfoot>
 </table>
 </template>
+
+
+<script setup>
+import {ref, computed} from 'vue';
+
+const products = ref([
+    {
+        name: 'Rijst',
+        productPrice: 1.50,
+        productQuantity: 3,
+        productTotalCost: 4.50
+    },
+    {
+        name: 'Pasta',
+        productPrice: 2.00,
+        productQuantity: 2,
+        productTotalCost: 4
+    },
+    {
+        name: 'Bonen',
+        productPrice: 1.20,
+        productQuantity: 5,
+        productTotalCost: 6
+    }
+]);
+
+function updatePrice(index) {
+  const product = products.value[index]
+  product.productTotalCost = product.productPrice * product.productQuantity;
+}
+
+const totalCost = computed(() => {
+  return products.value.reduce((sum, product) => sum + product.productTotalCost, 0)
+})
+
+</script>
+
 
 <style scoped>
 * {
