@@ -12,8 +12,8 @@
     <tr v-for="product, index in products" :key="index">
         <td> {{ product.name }}</td>
         <td class="amount">{{ product.productPrice.toFixed(2) }} </td>
-        <td class="amount"><input type="text" v-model="product.productQuantity" @input="updatePrice(index)"></td>
-        <td class="amount">{{ product.productTotalCost.toFixed(2)  }}</td>
+        <td class="amount"><input type="number" v-model="product.productQuantity"></td>
+        <td class="amount">{{ (product.productPrice * product.productQuantity).toFixed(2)  }}</td>
     </tr>
     </tbody>
     <tfoot>
@@ -31,15 +31,9 @@ import {computed} from 'vue';
 
 const props = defineProps(['products'])
 
-function updatePrice(index) {
-  const product = props.products[index]
-  product.productTotalCost = product.productPrice * product.productQuantity;
-}
-
 const totalCost = computed(() => {
-  return props.products.reduce((sum, product) => sum + product.productTotalCost, 0)
+  return props.products.reduce((sum, product) => sum + product.productPrice * product.productQuantity, 0)
 })
-
 </script>
 
 
