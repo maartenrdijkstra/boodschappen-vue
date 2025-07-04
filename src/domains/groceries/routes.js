@@ -8,5 +8,6 @@ export const routes = [
     {path: '/', component: Overview},
     {path: '/create', component: CreatePage},
     {path: '/edit', component: EditPage},
+    {path: '/edit/:id', component: EditPage},
     {path: '/grocery', component: GroceryForm}
 ]

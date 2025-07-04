@@ -9,11 +9,13 @@
     </tr>
     </thead>
     <tbody>
-    <tr v-for="grocery, index in groceries" :key="index">
+    <tr v-for="grocery in groceries" :key="grocery.id">
         <td> {{ grocery.name }}</td>
-        <td class="amount">{{ grocery.productPrice.toFixed(2) }} </td>
-        <td class="amount"><input type="number" v-model="grocery.productQuantity"></td>
-        <td class="amount">{{ (grocery.productPrice * grocery.productQuantity).toFixed(2)  }}</td>
+        <td class="text-align-right">{{ grocery.productPrice.toFixed(2) }} </td>
+        <td class="text-align-right"><input type="number" v-model="grocery.productQuantity"></td>
+        <td class="text-align-right">{{ (grocery.productPrice * grocery.productQuantity).toFixed(2)  }}</td>
+        <td class="text-align-right">{{ (grocery.productPrice * grocery.productQuantity).toFixed(2)  }}</td>
+        <td class="text-align-right"><a :href="`/edit/${grocery.id}`">Bewerken</a></td>
     </tr>
     </tbody>
     <tfoot>
@@ -52,7 +54,7 @@ th {
   border: 1px solid #888;
 }
 
-.amount {
+.text-align-right {
   text-align-last: right;
 }
 </style>
