@@ -27,7 +27,10 @@ export const getAllGroceries = computed(() => groceries.value);
 export const getGroceryById = (id) => computed(() => groceries.value.find(grocery => grocery.id == id));
 
 // Actions
-export const addGrocery = (grocery) => groceries.value.push(grocery);
+export const addGrocery = (grocery) => {
+    console.log(grocery);
+    groceries.value.push(grocery);
+}
 export const updateGrocery = (updated) => {
   const index = groceries.value.findIndex(g => g.id === updated.id)
   if (index !== -1) {

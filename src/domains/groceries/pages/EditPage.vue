@@ -13,8 +13,6 @@ const id = Number(route.params.id)
 
 const grocery = getGroceryById(id).value;
 
-console.log(grocery);
-
    function updateGroceryItem(updatedGroceryItem) {
         updateGrocery(updatedGroceryItem)        
     }

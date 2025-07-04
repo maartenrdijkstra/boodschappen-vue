@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import {ref} from 'vue';
+import { ref } from 'vue';
 import { getAllGroceries } from '../store';
 
 const emit = defineEmits(['save'])
@@ -25,7 +25,7 @@ const amount = ref(props.grocery.amount)
 
 function saveGroceryItem() {
   const newGrocery = {...props.grocery};
-  if(newGrocery.id === undefined) {
+  if (newGrocery.id === undefined) {
     const groceries = getAllGroceries.value;
     const maxId = Math.max(...groceries.map(g => g.id));
     newGrocery.id = maxId + 1; 
@@ -35,5 +35,4 @@ function saveGroceryItem() {
   newGrocery.amount = amount.value;
  emit('save', newGrocery); 
 }
-
 </script>
