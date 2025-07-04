@@ -9,11 +9,11 @@
     </tr>
     </thead>
     <tbody>
-    <tr v-for="product, index in products" :key="index">
-        <td> {{ product.name }}</td>
-        <td class="amount">{{ product.productPrice.toFixed(2) }} </td>
-        <td class="amount"><input type="number" v-model="product.productQuantity"></td>
-        <td class="amount">{{ (product.productPrice * product.productQuantity).toFixed(2)  }}</td>
+    <tr v-for="grocery, index in groceries" :key="index">
+        <td> {{ grocery.name }}</td>
+        <td class="amount">{{ grocery.productPrice.toFixed(2) }} </td>
+        <td class="amount"><input type="number" v-model="grocery.productQuantity"></td>
+        <td class="amount">{{ (grocery.productPrice * grocery.productQuantity).toFixed(2)  }}</td>
     </tr>
     </tbody>
     <tfoot>
@@ -29,10 +29,10 @@
 <script setup>
 import {computed} from 'vue';
 
-const props = defineProps(['products'])
+const props = defineProps(['groceries'])
 
 const totalCost = computed(() => {
-  return props.products.reduce((sum, product) => sum + product.productPrice * product.productQuantity, 0)
+  return props.groceries.reduce((sum, grocery) => sum + grocery.productPrice * grocery.productQuantity, 0)
 })
 </script>
 
