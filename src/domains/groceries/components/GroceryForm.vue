@@ -2,8 +2,8 @@
     <form @submit.prevent="addGroceryItem">
         <p>Add / Update Boodschap</p>      
         <p>Naam</p><input v-model="name">
-        <p>Prijs</p><input type="number" step=".01" min="0" v-model="amount">
-        <p>Hoeveelheid</p><input type="number"  min="0" v-model="price">
+        <p>Prijs</p><input type="number" step=".01" min="0" v-model="price">
+        <p>Hoeveelheid</p><input type="number"  min="0" v-model="amount">
         <br>
         <br>
         <button type="submit">Submit</button>
@@ -14,25 +14,26 @@
 import {ref} from 'vue';
 import { getAllGroceries } from '../store';
 
-const name = ref('')
-const price = ref(0)
-const amount = ref(0)
-
+const emit = defineEmits(['save'])
 const props = defineProps({
   grocery: Object
 });
 
-const emit = defineEmits(['submit'])
+const name = ref(props.grocery.name)
+const price = ref(props.grocery.price)
+const amount = ref(props.grocery.amount)
+
 
 function addGroceryItem() {
-  const newGrocery = props.grocery;
-  if(!newGrocery.id) {
-    newGrocery.id = Math.max(getAllGroceries.map(groc => groc.id)) + 1;
+  const newGrocery = {...props.grocery};
+  if(newGrocery.id === undefined) {
+    const groceries = getAllGroceries.value;
+    const maxId = Math.max(...groceries.map(g => g.id));
+    newGrocery.id = maxId + 1; 
   }
   newGrocery.name = name.value;
   newGrocery.price = price.value;
   newGrocery.amount = amount.value;
-  console.log(newGrocery); 
- emit('submit', newGrocery); 
+ emit('save', newGrocery); 
 }
 </script>
