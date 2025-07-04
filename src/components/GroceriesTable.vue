@@ -11,11 +11,11 @@
     <tbody>
     <tr v-for="grocery in groceries" :key="grocery.id">
         <td> {{ grocery.name }}</td>
-        <td class="text-align-right">{{ grocery.productPrice.toFixed(2) }} </td>
-        <td class="text-align-right"><input type="number" v-model="grocery.productQuantity"></td>
-        <td class="text-align-right">{{ (grocery.productPrice * grocery.productQuantity).toFixed(2)  }}</td>
-        <td class="text-align-right">{{ (grocery.productPrice * grocery.productQuantity).toFixed(2)  }}</td>
+        <td class="text-align-right">{{ grocery.price.toFixed(2) }} </td>
+        <td class="text-align-right"><input type="number" v-model="grocery.amount"></td>
+        <td class="text-align-right">{{ (grocery.price * grocery.amount).toFixed(2)  }}</td>
         <td class="text-align-right"><a :href="`/edit/${grocery.id}`">Bewerken</a></td>
+        <td class="text-align-right"><button @click="removeGrocery(`${grocery.id}`)">Verwijderen</button></td>
     </tr>
     </tbody>
     <tfoot>
@@ -30,11 +30,12 @@
 
 <script setup>
 import {computed} from 'vue';
+import { removeGrocery } from '../domains/groceries/store';
 
 const props = defineProps(['groceries'])
 
 const totalCost = computed(() => {
-  return props.groceries.reduce((sum, grocery) => sum + grocery.productPrice * grocery.productQuantity, 0)
+  return props.groceries.reduce((sum, grocery) => sum + grocery.price * grocery.amount, 0)
 })
 </script>
 

@@ -35,3 +35,6 @@ export const updateGrocery = (updated) => {
   }
   console.log(groceries.value[index]);
 }
+export const removeGrocery = (id) => {
+    groceries.value.splice(groceries.value.findIndex(grocery => grocery.id === id), 1)
+}
