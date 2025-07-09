@@ -29,7 +29,7 @@ export const getGroceryById = (id) =>
 
 // Actions
 export const addGrocery = (grocery) => {
-  if (grocery.id === undefined || grocery.isNaN()) {
+  if (grocery.id === undefined) {
     const groceries = getAllGroceries.value;
     grocery.id = Math.max(...groceries.map((g) => g.id)) + 1;
   }
