@@ -13,7 +13,6 @@ const id = Number(route.params.id);
 
 const grocery = getGroceryById(id);
 
-// TODO :: probeer om de arrow-notation toe te passen
 const updateGroceryItem = (updatedGroceryItem) => {
   updateGrocery(updatedGroceryItem);
 };
