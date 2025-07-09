@@ -1,44 +1,56 @@
 <template>
-    <table>
+  <table>
     <thead>
-    <tr>
+      <tr>
         <th>Product</th>
         <th>Prijs</th>
         <th>Hoeveelheid</th>
         <th>Subtotaal</th>
-    </tr>
+      </tr>
     </thead>
     <tbody>
-    <tr v-for="grocery in groceries" :key="grocery.id">
-        <td> {{ grocery.name }}</td>
-        <td class="text-align-right">{{ grocery.price.toFixed(2) }} </td>
-        <td class="text-align-right"><input type="number" v-model="grocery.amount"></td>
-        <td class="text-align-right">{{ (grocery.price * grocery.amount).toFixed(2)  }}</td>
-        <td class="text-align-right"><a :href="`/edit/${grocery.id}`">Bewerken</a></td>
-        <td class="text-align-right"><button @click="removeGrocery(`${grocery.id}`)">Verwijderen</button></td>
-    </tr>
+      <tr v-for="grocery in props.groceries" :key="grocery.id">
+        <td>{{ grocery.name }}</td>
+        <td class="text-align-right">{{ grocery.price.toFixed(2) }}</td>
+        <td class="text-align-right">
+          <input type="number" v-model="grocery.amount" />
+        </td>
+        <td class="text-align-right">
+          {{ (grocery.price * grocery.amount).toFixed(2) }}
+        </td>
+        <td class="text-align-right">
+          <RouterLink :to="`/edit/${grocery.id}`">Bewerken</RouterLink>
+        </td>
+        <td class="text-align-right">
+          <button @click="removeGrocery(`${grocery.id}`)">Verwijderen</button>
+        </td>
+      </tr>
     </tbody>
     <tfoot>
-        <tr>
-    <td colspan="3"><strong>Totaal</strong></td>
-   <td><strong>{{ totalCost.toFixed(2)  }}</strong></td>
-    </tr>
+      <tr>
+        <td colspan="3"><strong>Totaal</strong></td>
+        <td>
+          <strong>{{ totalCost.toFixed(2) }}</strong>
+        </td>
+      </tr>
     </tfoot>
-</table>
+  </table>
 </template>
 
-
 <script setup>
-import {computed} from 'vue';
-import { removeGrocery } from '../domains/groceries/store';
+import { computed } from "vue";
+import { removeGrocery } from "../domains/groceries/store";
+import { RouterLink } from "vue-router";
 
-const props = defineProps(['groceries'])
+const props = defineProps(["groceries"]);
 
 const totalCost = computed(() => {
-  return props.groceries.reduce((sum, grocery) => sum + grocery.price * grocery.amount, 0)
-})
+  return props.groceries.reduce(
+    (sum, grocery) => sum + grocery.price * grocery.amount,
+    0
+  );
+});
 </script>
-
 
 <style scoped>
 * {
